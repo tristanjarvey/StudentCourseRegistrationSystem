@@ -25,34 +25,6 @@ The **Student Course Registration System (SCRS)** is a web-based application des
 - **Version Control:** Git/GitHub
 - **Project Management:** Jira
 
----
-
-## Project Structure (will need to be updated as project progresses)
-
-SCRS/
-├── manage.py
-├── scrs/
-│ ├── settings.py
-│ ├── urls.py
-│ ├── wsgi.py
-│ └── templates/
-├── registration/
-│ ├── migrations/
-│ ├── admin.py
-│ ├── models.py
-│ ├── views.py
-│ ├── urls.py
-│ ├── templates/
-│ ├── static/
-│ └── forms.py
-├── requirements.txt
-├── .gitignore
-├── README.md
-├── scripts/
-└── docs/
-
----
-
 ## Setup Instructions
 
 ### Prerequisites
@@ -87,15 +59,17 @@ SCRS/
 1. Clone the repository.
 2. Create a new branch for your feature or bug fix:
    > git checkout -b feature/your-feature-name
-3. Commit your changes:
+3. Stage all changes:
+   > git add .
+4. Commit your changes:
    > git commit -m "Add your commit message here"
-4. Push to the branch:
+5. Push to the branch:
    > git push origin feature/your-feature-name
-5. Create a Pull Request (PR) for review.
+6. Create a Pull Request (PR) for review.
 
 ## Team Members
 
-Tristan Jarvey
-Ishika Patel
-Angel Ortiz
-Jumana Adams
+- Tristan Jarvey
+- Ishika Patel
+- Angel Ortiz
+- Jumana Adams
