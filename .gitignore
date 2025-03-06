@@ -1,0 +1,37 @@
+# Ignore compiled files
+*.class
+*.jar
+*.war
+*.ear
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Ignore build and dependency folders
+target/
+bin/
+lib/
+node_modules/
+
+# Ignore environment files
+.env
+*.env
+
+# Ignore log files
+*.log
+logs/
+
+# DJANGO
+*.sqlite3
+*.pyc
+__pycache__/
+media/
+staticfiles/
+
+# Virtual environment
+venv/
+env/
