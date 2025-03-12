@@ -28,6 +28,7 @@ logs/
 # DJANGO
 *.sqlite3
 *.pyc
+db.sqlite3
 __pycache__/
 media/
 staticfiles/
