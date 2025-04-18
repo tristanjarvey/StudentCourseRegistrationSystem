@@ -18,16 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
 
     # User authentication URLs (built-in Django auth)
-    path('accounts/', include('django.contrib.auth.urls')),
+   # path('accounts/', include('django.contrib.auth.urls')),
 
     # App-specific URLs
-    path('users/', include('users.urls', namespace='users')),
-    path('courses/', include('courses.urls', namespace='courses')),
-    path('registrations/', include('registrations.urls', namespace='registrations')),
+    #path('users/', include('users.urls', namespace='users')),
+   # path('courses/', include('courses.urls', namespace='courses')),
+   # path('registrations/', include('registrations.urls', namespace='registrations')),
 
     # Home page URL
-    path('', include('users.urls')),  # Users app handles the home page
+   # path('', include('users.urls')),  # Users app handles the home page
 ]

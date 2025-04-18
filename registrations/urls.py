@@ -14,21 +14,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.urls import path
 from . import views
+
+urlpatterns = [
+    path('register/', views.course_registration, name='course_registration'),
+]
 
 app_name = 'registrations'
 
 urlpatterns = [
     # Student registration views
-    path('', views.registration_dashboard, name='dashboard'),
-    path('register/<int:section_id>/', views.register_for_section, name='register_section'),
-    path('drop/<int:registration_id>/', views.drop_section, name='drop_section'),
+   # path('', views.registration_dashboard, name='dashboard'),
+    #path('register/<int:section_id>/', views.register_for_section, name='register_section'),
+   # path('drop/<int:registration_id>/', views.drop_section, name='drop_section'),
 
     # Registration management (for admins/instructors)
-    path('manage/', views.manage_registrations, name='manage'),
-    path('section/<int:section_id>/registrations/', views.section_registrations, name='section_registrations'),
+    #path('manage/', views.manage_registrations, name='manage'),
+   # path('section/<int:section_id>/registrations/', views.section_registrations, name='section_registrations'),
 
     # Waitlist management
-    path('waitlist/', views.waitlist_management, name='waitlist'),
+    #path('waitlist/', views.waitlist_management, name='waitlist'),
+
 ]

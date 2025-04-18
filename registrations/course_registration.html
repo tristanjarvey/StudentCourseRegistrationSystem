@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Registration</title>
+</head>
+<body>
+    <h1>Register for a Course</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li style="color:{% if message.tags == 'error' %}red{% else %}green{% endif %};">
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="course">Select a course:</label>
+        <select name="course_id" id="course">
+            {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.name }} - {{ course.department }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <button type="submit">Register</button>
+    </form>
+
+    <hr>
+
+    <h2>Your Current Schedule</h2>
+    <ul>
+        {% for enrollment in enrollments %}
+            <li>{{ enrollment.course.name }} - {{ enrollment.course.department }}</li>
+        {% empty %}
+            <li>You are not enrolled in any courses.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

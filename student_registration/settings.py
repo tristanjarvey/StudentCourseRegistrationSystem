@@ -78,8 +78,9 @@ WSGI_APPLICATION = 'student_registration.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+from dotenv import load_dotenv
+import os
 
-# Load environment variables from .env file
 load_dotenv()
 
 DATABASES = {
@@ -92,6 +93,7 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
+
 
 
 # Password validation

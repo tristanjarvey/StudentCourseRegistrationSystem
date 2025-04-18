@@ -21,15 +21,15 @@ app_name = 'users'
 
 urlpatterns = [
     # Home page
-    path('', views.home, name='home'),
+   # path('', views.home, name='home'),
 
     # User registration
-    path('register/', views.register, name='register'),
+    #path('register/', views.register, name='register'),
 
     # User profile
-    path('profile/', views.profile, name='profile'),
-    path('profile/edit/', views.edit_profile, name='edit_profile'),
+   # path('profile/', views.profile, name='profile'),
+   # path('profile/edit/', views.edit_profile, name='edit_profile'),
 
     # Admin-specific views
-    path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
+   # path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
 ]
