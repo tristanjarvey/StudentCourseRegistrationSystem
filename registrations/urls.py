@@ -18,11 +18,14 @@ Including another URLconf
 from django.urls import path
 from . import views
 
+app_name = 'registrations'
+
 urlpatterns = [
     path('register/', views.course_registration, name='course_registration'),
-]
+    path('drop/<int:enrollment_id>/', views.drop_course, name='drop_course'),
+    path('schedule/', views.student_schedule, name='student_schedule'),
 
-app_name = 'registrations'
+]
 
 urlpatterns = [
     # Student registration views

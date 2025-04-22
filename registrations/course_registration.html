@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Course Registration</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1, h2 { color: #333; }
+        .messages li { margin: 5px 0; }
+        .success { color: green; }
+        .error { color: red; }
+        .course-list { margin-top: 20px; }
+        .course-item { margin-bottom: 10px; }
+        form.inline { display: inline; }
+    </style>
 </head>
 <body>
     <h1>Register for a Course</h1>
 
     {% if messages %}
-        <ul>
+        <ul class="messages">
             {% for message in messages %}
-                <li style="color:{% if message.tags == 'error' %}red{% else %}green{% endif %};">
-                    {{ message }}
-                </li>
+                <li class="{{ message.tags }}">{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}
@@ -20,24 +28,29 @@
     <form method="POST">
         {% csrf_token %}
         <label for="course">Select a course:</label>
-        <select name="course_id" id="course">
+        <select name="course_id" id="course" required>
             {% for course in courses %}
                 <option value="{{ course.id }}">{{ course.name }} - {{ course.department }}</option>
             {% endfor %}
         </select>
-        <br><br>
         <button type="submit">Register</button>
     </form>
 
     <hr>
 
     <h2>Your Current Schedule</h2>
-    <ul>
+    <div class="course-list">
         {% for enrollment in enrollments %}
-            <li>{{ enrollment.course.name }} - {{ enrollment.course.department }}</li>
+            <div class="course-item">
+                {{ enrollment.course.name }} - {{ enrollment.course.department }}
+                <form method="POST" action="{% url 'registrations:drop_course' enrollment.id %}" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" style="margin-left: 10px;">Drop</button>
+                </form>
+            </div>
         {% empty %}
-            <li>You are not enrolled in any courses.</li>
+            <p>You are not enrolled in any courses.</p>
         {% endfor %}
-    </ul>
+    </div>
 </body>
 </html>
