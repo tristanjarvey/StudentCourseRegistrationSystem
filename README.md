@@ -33,20 +33,22 @@ The **Student Course Registration System (SCRS)** is a web-based application des
 - **MySQL**
 - **Git**
 
-## Usage
+## Admin Dashboard (admin_dashboard)
 
-### Student Features
+### Seeding Data for admin_dashboard
 
-- Login: Access the application using your student credentials.
-- Course Catalog: View available courses and filter by department.
-- Register for Courses: Enroll in courses and view your schedule.
-- Drop Courses: Remove courses from your schedule.
+To load sample buildings and classrooms into your local database, run:
 
-### Administrator Features
+> python manage.py seed_admin_data
 
-- Manage Courses: Add, edit, or delete courses and sections.
-- View Enrollments: See which students are enrolled in each course.
-- Generate Reports: Export enrollment data for analysis.
+This command will:
+
+- Clear all existing classrooms and buildings
+- Add 4 buildings and 4 classrooms
+- Use this to test course scheduling, availability, etc.
+
+You can find the script here:
+admin_dashboard/management/commands/seed_data.py
 
 ## Documentation
 
