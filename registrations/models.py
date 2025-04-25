@@ -33,5 +33,8 @@ class Enrollment(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     date_registered = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ('student', 'section')
+
     def __str__(self):
         return f"{self.student.user.username} -> {self.section.course.name} ({self.section.semester})"

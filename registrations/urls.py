@@ -14,20 +14,37 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# registrations/urls.py
 
-from django.urls import path
+from django.urls import path, include
 from . import views
+from django.contrib import admin
+from django.contrib.auth import views as auth_views
+from django.urls import include, path
 
 app_name = 'registrations'
 
+
 urlpatterns = [
-    path('register/', views.course_registration, name='course_registration'),
+    # Admin page
+    path('admin/', admin.site.urls),
+    path('users/', include('users.urls')),
+
+    # Login page (for unauthenticated users)
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+
+    # Student registration views
+    path('', views.course_registration, name='course_registration'),  # Home page
     path('drop/<int:enrollment_id>/', views.drop_course, name='drop_course'),
     path('schedule/', views.student_schedule, name='student_schedule'),
 
+    # Additional paths can be added here
+    # path('another_view/', views.another_view, name='another_view'),
 ]
 
-urlpatterns = [
+
+
+
     # Student registration views
    # path('', views.registration_dashboard, name='dashboard'),
     #path('register/<int:section_id>/', views.register_for_section, name='register_section'),
@@ -40,4 +57,3 @@ urlpatterns = [
     # Waitlist management
     #path('waitlist/', views.waitlist_management, name='waitlist'),
 
-]

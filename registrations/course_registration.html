@@ -12,6 +12,7 @@
         .course-list { margin-top: 20px; }
         .course-item { margin-bottom: 10px; }
         form.inline { display: inline; }
+        button { padding: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -33,7 +34,7 @@
                 <option value="{{ course.id }}">{{ course.name }} - {{ course.department }}</option>
             {% endfor %}
         </select>
-        <button type="submit">Register</button>
+        <button type="submit" class="btn-register">Register</button>
     </form>
 
     <hr>
@@ -45,7 +46,7 @@
                 {{ enrollment.course.name }} - {{ enrollment.course.department }}
                 <form method="POST" action="{% url 'registrations:drop_course' enrollment.id %}" class="inline">
                     {% csrf_token %}
-                    <button type="submit" style="margin-left: 10px;">Drop</button>
+                    <button type="submit" class="btn-drop" style="margin-left: 10px;">Drop</button>
                 </form>
             </div>
         {% empty %}
