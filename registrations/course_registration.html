@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Registration</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1, h2 { color: #333; }
+        .messages li { margin: 5px 0; }
+        .success { color: green; }
+        .error { color: red; }
+        .course-list { margin-top: 20px; }
+        .course-item { margin-bottom: 10px; }
+        form.inline { display: inline; }
+        button { padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Register for a Course</h1>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="course">Select a course:</label>
+        <select name="course_id" id="course" required>
+            {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.name }} - {{ course.department }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn-register">Register</button>
+    </form>
+
+    <hr>
+
+    <h2>Your Current Schedule</h2>
+    <div class="course-list">
+        {% for enrollment in enrollments %}
+            <div class="course-item">
+                {{ enrollment.course.name }} - {{ enrollment.course.department }}
+                <form method="POST" action="{% url 'registrations:drop_course' enrollment.id %}" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-drop" style="margin-left: 10px;">Drop</button>
+                </form>
+            </div>
+        {% empty %}
+            <p>You are not enrolled in any courses.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

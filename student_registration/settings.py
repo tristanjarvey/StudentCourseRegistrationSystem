@@ -79,8 +79,9 @@ WSGI_APPLICATION = 'student_registration.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+from dotenv import load_dotenv
+import os
 
-# Load environment variables from .env file
 load_dotenv()
 
 DATABASES = {
@@ -93,6 +94,7 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
+
 
 
 # Password validation
@@ -124,6 +126,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+LOGIN_URL = 'registrations:login'
 
 
 # Static files (CSS, JavaScript, Images)
