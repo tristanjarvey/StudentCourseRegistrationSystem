@@ -177,7 +177,7 @@ class StudentProfileView(LoginRequiredMixin, View):
         form = StudentProfileForm(request.POST, instance=request.user.student)
         if form.is_valid():
             form.save()
-            return redirect("home")  # After profile completion
+            return redirect("users:home")  # Updated to use correct namespace
         return render(request, "users/student_profile.html", {"form": form})
 
 
@@ -190,7 +190,7 @@ class FacultyProfileView(LoginRequiredMixin, View):
         form = FacultyProfileForm(request.POST, instance=request.user.faculty)
         if form.is_valid():
             form.save()
-            return redirect("home")  # After profile completion
+            return redirect("users:home")  # Updated to use correct namespace
         return render(request, "users/faculty_profile.html", {"form": form})
 
 @login_required
