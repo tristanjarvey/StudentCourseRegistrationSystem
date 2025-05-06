@@ -1,0 +1,95 @@
+{% extends 'users/base.html' %} {% load static %} {% block content %}
+<div class="container py-4">
+  <h1 class="text-white mb-4">My Teaching Schedule</h1>
+
+  <div class="card bg-dark">
+    <div class="card-body">
+      {% if teaching_sections %}
+      <div class="table-responsive">
+        <table class="table table-dark table-bordered">
+          <thead>
+            <tr>
+              <th>Time</th>
+              {% for day in days %}
+              <th>{{ day.1 }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for time_slot in time_slots %}
+            <tr>
+              <td>{{ time_slot.1 }}</td>
+              {% for day in days %}
+              <td>
+                {% for section in teaching_sections %} {% if section.day ==
+                day.0 and section.time_slot == time_slot.0 %}
+                <div
+                  class="schedule-block p-2 mb-2"
+                  style="
+                    background-color: rgba(255, 215, 0, 0.1);
+                    border-radius: 4px;
+                  "
+                >
+                  <div class="course-code">{{ section.course.code }}</div>
+                  <div class="course-name small">{{ section.course.name }}</div>
+                  <div class="section-info small">
+                    Section {{ section.section_number }}
+                  </div>
+                  <div class="enrollment-info small">
+                    {{ section.enrollment_set.count }} enrolled
+                  </div>
+                </div>
+                {% endfor %}
+              </td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-center" style="color: #b8b8b8">
+        You are not teaching any courses this semester.
+        <a
+          href="{% url 'courses:course_create' %}"
+          class="text-decoration-none"
+          style="color: #ffd700"
+        >
+          Create a new course
+        </a>
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .schedule-block {
+    transition: all 0.3s ease;
+  }
+
+  .schedule-block:hover {
+    background-color: rgba(255, 215, 0, 0.2) !important;
+    cursor: pointer;
+  }
+
+  .course-code {
+    font-weight: bold;
+    color: #ffd700;
+  }
+
+  .course-name {
+    color: #ffffff;
+    margin: 2px 0;
+  }
+
+  .section-info {
+    color: #cccccc;
+  }
+
+  .enrollment-info {
+    color: #999999;
+    font-style: italic;
+  }
+</style>
+{% endblock %}

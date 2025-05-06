@@ -1,0 +1,53 @@
+{% extends 'users/base.html' %} {% load static %} {% block content %}
+<div class="container-fluid py-4">
+  <h1 class="text-white mb-4">Student Dashboard</h1>
+
+  <div class="row">
+    <!-- Current Courses Card -->
+    <div class="col-md-10 mb-4">
+      <div class="card bg-dark text-white" style="border: 1px solid #ffd700">
+        <div class="card-body">
+          <h5 class="card-title" style="color: #ffd700">Current Courses</h5>
+          <div class="table-responsive">
+            <table class="table table-dark">
+              <thead>
+                <tr>
+                  <th>Course Code</th>
+                  <th>Course Name</th>
+                  <th>Schedule</th>
+                  <th>Professor</th>
+                  <th>Building</th>
+                  <th>Classroom</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for enrollment in enrollments %}
+                <tr>
+                  <td>{{ enrollment.section.course.code }}</td>
+                  <td>{{ enrollment.section.course.name }}</td>
+                  <td>{{ enrollment.section.schedule_display }}</td>
+                  <td>{{ enrollment.section.professor_display }}</td>
+                  <td>{{ enrollment.section.building_display }}</td>
+                  <td>{{ enrollment.section.classroom_display }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="6" class="text-center" style="color: #b8b8b8">
+                    You are not enrolled in any courses yet.
+                    <a
+                      href="{% url 'courses:course_list' %}"
+                      style="color: #ffd700"
+                      >Browse available courses</a
+                    >
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

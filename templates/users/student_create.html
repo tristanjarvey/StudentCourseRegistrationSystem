@@ -1,0 +1,93 @@
+{# prettier-ignore #} {% extends 'users/base.html' %} {% block title %}Create
+Student - EnrollEase{% endblock %} {% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card bg-dark text-white">
+        <div class="card-header">
+          <h2 class="mb-0">Create New Student</h2>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="student_id" class="form-label">Student ID</label>
+              <input
+                type="text"
+                class="form-control"
+                id="student_id"
+                name="student_id"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="first_name" class="form-label">First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="first_name"
+                name="first_name"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="last_name" class="form-label">Last Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="last_name"
+                name="last_name"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="degree_program" class="form-label"
+                >Degree Program</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="degree_program"
+                name="degree_program"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="enrollment_year" class="form-label"
+                >Enrollment Year</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="enrollment_year"
+                name="enrollment_year"
+                required
+              />
+            </div>
+            <div class="d-flex justify-content-between">
+              <a
+                href="{% url 'users:faculty_admin_dashboard' %}"
+                class="btn btn-secondary"
+                >Cancel</a
+              >
+              <button type="submit" class="btn btn-primary">
+                Create Student
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

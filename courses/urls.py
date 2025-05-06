@@ -20,19 +20,27 @@ from . import views
 app_name = 'courses'
 
 urlpatterns = [
-    # Course listings
+    # Common URLs (accessible by all authenticated users)
     path('', views.course_list, name='course_list'),
-
-    # Course detail
-    path('<int:course_id>/', views.course_detail, name='course_detail'),
-
-    # Course management (for instructors/admins)
-    path('create/', views.create_course, name='create_course'),
-    path('<int:course_id>/edit/', views.edit_course, name='edit_course'),
-    path('<int:course_id>/delete/', views.delete_course, name='delete_course'),
-
-    # Course sections
-    path('<int:course_id>/sections/', views.section_list, name='section_list'),
-    path('<int:course_id>/sections/create/', views.create_section, name='create_section'),
-    path('sections/<int:section_id>/', views.section_detail, name='section_detail'),
+    path('course/<int:course_id>/', views.course_detail, name='course_detail'),
+    path('sections/', views.section_list, name='section_list'),
+    path('section/<int:section_id>/', views.section_detail, name='section_detail'),
+    
+    # Student URLs
+    path('my-courses/', views.my_courses, name='my_courses'),
+    path('my-schedule/', views.my_schedule, name='my_schedule'),
+    path('enroll/<int:section_id>/', views.enroll, name='enroll'),
+    path('unenroll/<int:section_id>/', views.unenroll, name='unenroll'),
+    
+    # Faculty/Admin URLs
+    path('course/create/', views.course_create, name='course_create'),
+    path('course/<int:course_id>/edit/', views.course_edit, name='course_edit'),
+    path('course/<int:course_id>/delete/', views.course_delete, name='course_delete'),
+    path('section/<int:section_id>/manage/', views.section_manage, name='section_manage'),
+    path('enrollment/<int:enrollment_id>/update-grade/', views.update_grade, name='update_grade'),
+    
+    # Section URLs
+    path('section/<int:section_id>/edit/', views.section_edit, name='section_edit'),
+    path('section/<int:section_id>/delete/', views.section_delete, name='section_delete'),
+    path('section/create/', views.section_create, name='section_create'),
 ]

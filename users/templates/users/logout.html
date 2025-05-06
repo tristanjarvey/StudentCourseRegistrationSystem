@@ -1,0 +1,22 @@
+{% extends 'users/base.html' %} {% block title %}Logged Out - EnrollEase{%
+endblock %} {% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg p-4">
+        <div class="text-center">
+          <i
+            class="fas fa-sign-out-alt fa-3x mb-3"
+            style="color: var(--primary-gold)"
+          ></i>
+          <h4 class="mb-3">You have been logged out</h4>
+          <p class="mb-4">Thank you for using EnrollEase</p>
+          <a href="{% url 'users:login' %}" class="btn btn-primary">
+            <i class="fas fa-sign-in-alt me-2"></i>Log in again
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

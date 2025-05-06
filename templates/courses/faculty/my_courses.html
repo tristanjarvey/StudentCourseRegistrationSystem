@@ -1,0 +1,105 @@
+{% extends 'users/base.html' %} {% load static %} {% block content %}
+<div class="container py-4">
+  <h1 class="text-white mb-4">My Courses</h1>
+
+  <div class="card bg-dark">
+    <div class="card-body">
+      {% if teaching_sections %}
+      <div class="table-responsive">
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>Course Code</th>
+              <th>Course Name</th>
+              <th>Section</th>
+              <th>Schedule</th>
+              <th>Enrollment</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for section in teaching_sections %}
+            <tr>
+              <td>{{ section.course.code }}</td>
+              <td>{{ section.course.name }}</td>
+              <td>Section {{ section.section_number }}</td>
+              <td>{{ section.day }} {{ section.time_slot }}</td>
+              <td>
+                <button
+                  class="btn btn-sm"
+                  style="background-color: #ffd700; color: #111111"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#enrollment-{{ section.id }}"
+                  aria-expanded="false"
+                  aria-controls="enrollment-{{ section.id }}"
+                >
+                  {{ section.enrollment_set.count }}
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6" class="p-0">
+                <div class="collapse" id="enrollment-{{ section.id }}">
+                  <div class="card card-body bg-dark border-top-0">
+                    <h6 class="text-white mb-3">Enrolled Students</h6>
+                    {% if section.enrollment_set.all %}
+                    <div class="table-responsive">
+                      <table class="table table-dark table-sm">
+                        <thead>
+                          <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Enrollment Date</th>
+                            <th>Grade</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for enrollment in section.enrollment_set.all %}
+                          <tr>
+                            <td>{{ enrollment.student.student_id }}</td>
+                            <td>{{ enrollment.student.student_name }}</td>
+                            <td>{{ enrollment.student.user.email }}</td>
+                            <td>
+                              {{ enrollment.date_registered|date:"M d, Y" }}
+                            </td>
+                            <td>
+                              {% if enrollment.grade %} {{ enrollment.grade }}
+                              {% else %}
+                              <span class="text-muted">Not Graded</span>
+                              {% endif %}
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                    {% else %}
+                    <p class="text-center text-muted mb-0">
+                      No students enrolled in this section.
+                    </p>
+                    {% endif %}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-center" style="color: #b8b8b8">
+        You are not teaching any courses this semester.
+        <a
+          href="{% url 'courses:course_create' %}"
+          class="text-decoration-none"
+          style="color: #ffd700"
+        >
+          Create a new course
+        </a>
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

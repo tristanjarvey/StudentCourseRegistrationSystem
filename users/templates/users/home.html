@@ -1,0 +1,176 @@
+{% extends 'users/base.html' %} {% block title %}EnrollEase - Home{% endblock %}
+{% block content %}
+<div class="container">
+  <!-- Hero Section -->
+  <div class="row justify-content-center align-items-center py-5">
+    <div class="col-md-8 text-center">
+      <h1 class="display-4 mb-3">
+        <span style="color: var(--primary-gold)">EnrollEase</span>
+        Course Registration
+      </h1>
+      <p class="lead text-light mb-4">
+        A simple and efficient way for students to browse and register for
+        courses.
+      </p>
+      <div
+        class="d-inline-block px-4 py-2 mb-4"
+        style="
+          background: rgba(255, 215, 0, 0.1);
+          border: 1px solid rgba(255, 215, 0, 0.2);
+          border-radius: 6px;
+        "
+      >
+        <span style="color: var(--primary-gold)">Registrations Now Open:</span>
+        <span class="text-light ms-2">Fall 2025</span>
+      </div>
+      <div class="d-flex justify-content-center gap-3">
+        {% if user.is_authenticated %}
+        <a href="{% url 'courses:course_list' %}" class="btn btn-primary px-4">
+          <i class="fas fa-book"></i> Browse Courses
+        </a>
+        <a
+          href="{% url 'courses:my_courses' %}"
+          class="btn px-4"
+          style="
+            background-color: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--primary-gold);
+            color: var(--primary-gold);
+          "
+        >
+          <i class="fas fa-list"></i> My Courses
+        </a>
+        {% else %}
+        <a href="{% url 'users:login' %}" class="btn btn-primary px-4">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+        <a
+          href="{% url 'courses:course_list' %}"
+          class="btn px-4"
+          style="
+            background-color: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--primary-gold);
+            color: var(--primary-gold);
+          "
+        >
+          <i class="fas fa-book"></i> Browse Courses
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics Section -->
+  <div class="row mb-5">
+    <div class="col-md-4">
+      <div class="card text-center h-100">
+        <div class="card-body">
+          <i
+            class="fas fa-book fa-3x mb-3"
+            style="color: var(--primary-gold)"
+          ></i>
+          <h3 class="card-title">{{ total_courses }}</h3>
+          <p class="card-text text-muted">Available Courses</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center h-100">
+        <div class="card-body">
+          <i
+            class="fas fa-chalkboard-teacher fa-3x mb-3"
+            style="color: var(--primary-gold)"
+          ></i>
+          <h3 class="card-title">{{ total_sections }}</h3>
+          <p class="card-text text-muted">Course Sections</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center h-100">
+        <div class="card-body">
+          <i
+            class="fas fa-users fa-3x mb-3"
+            style="color: var(--primary-gold)"
+          ></i>
+          <h3 class="card-title">{{ total_students }}</h3>
+          <p class="card-text text-muted">Enrolled Students</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Courses Section -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2 class="mb-4">Featured Courses</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for course in featured_courses %}
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ course.code }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ course.name }}</h6>
+              <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+              <p class="card-text">
+                <small class="text-muted">
+                  <i class="fas fa-graduation-cap"></i> {{ course.credits }}
+                  Credits
+                  <br />
+                  <i class="fas fa-building"></i> {{ course.department.name }}
+                </small>
+              </p>
+            </div>
+            <div class="card-footer bg-transparent">
+              <a
+                href="{% url 'courses:course_detail' course.id %}"
+                class="btn btn-outline-primary btn-sm"
+              >
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Courses Section -->
+  <div class="row">
+    <div class="col-12">
+      <h2 class="mb-4">Recently Added Courses</h2>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Credits</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for course in recent_courses %}
+            <tr>
+              <td>{{ course.code }}</td>
+              <td>{{ course.name }}</td>
+              <td>{{ course.department.name }}</td>
+              <td>{{ course.credits }}</td>
+              <td>
+                <a
+                  href="{% url 'courses:course_detail' course.id %}"
+                  class="btn btn-outline-primary btn-sm"
+                >
+                  <i class="fas fa-eye"></i> View
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

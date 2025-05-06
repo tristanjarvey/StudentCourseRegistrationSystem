@@ -16,18 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import RedirectView
+from users import views
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='users/login/', permanent=False), name='index'),
     path('admin/', admin.site.urls),
-
-    # User authentication URLs (built-in Django auth)
-    path('accounts/', include('django.contrib.auth.urls')),
-
-    # App-specific URLs
-    path('users/', include('users.urls', namespace='users')),
-    path('courses/', include('courses.urls', namespace='courses')),
-    path('registrations/', include('registrations.urls', namespace='registrations')),
-
-    # Home page URL
-    path('', include('users.urls')),  # Users app handles the home page
+    path('users/', include('users.urls')),
+    path('courses/', include('courses.urls')),
+    path('dashboard/student/', views.student_dashboard, name='student_dashboard'),
+    path('dashboard/faculty/', views.faculty_dashboard, name='faculty_dashboard'),
 ]

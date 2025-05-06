@@ -1,0 +1,107 @@
+{% extends 'users/base.html' %} {% load static %} {% block content %}
+<div class="container py-4">
+  <h1 class="text-white mb-4">My Courses</h1>
+
+  <!-- Enrolled Courses Section -->
+  <div class="card bg-dark mb-4">
+    <div class="card-header">
+      <h2 class="h4 mb-0" style="color: #ffd700">Enrolled Courses</h2>
+    </div>
+    <div class="card-body">
+      {% if enrollments %}
+      <div class="table-responsive">
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>Course Code</th>
+              <th>Course Name</th>
+              <th>Section</th>
+              <th>Schedule</th>
+              <th>Professor</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for enrollment in enrollments %}
+            <tr>
+              <td>{{ enrollment.section.course.code }}</td>
+              <td>{{ enrollment.section.course.name }}</td>
+              <td>Section {{ enrollment.section.section_number }}</td>
+              <td>
+                {{ enrollment.section.day }} {{ enrollment.section.time_slot }}
+              </td>
+              <td>{{ enrollment.section.professor_display }}</td>
+              <td>
+                <a
+                  href="{% url 'courses:unenroll' section_id=enrollment.section.id %}"
+                  class="btn btn-sm"
+                  style="background-color: #ffd700; color: #111111"
+                >
+                  <i class="fas fa-times"></i> Drop
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-center" style="color: #b8b8b8">
+        You are not enrolled in any courses yet.
+      </p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Available Courses Section -->
+  <div class="card bg-dark">
+    <div class="card-header">
+      <h2 class="h4 mb-0" style="color: #ffd700">Available Courses</h2>
+    </div>
+    <div class="card-body">
+      {% if available_sections %}
+      <div class="table-responsive">
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>Course Code</th>
+              <th>Course Name</th>
+              <th>Section</th>
+              <th>Schedule</th>
+              <th>Professor</th>
+              <th>Available Seats</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for section in available_sections %}
+            <tr>
+              <td>{{ section.course.code }}</td>
+              <td>{{ section.course.name }}</td>
+              <td>Section {{ section.section_number }}</td>
+              <td>{{ section.day }} {{ section.time_slot }}</td>
+              <td>{{ section.professor_display }}</td>
+              <td>{{ section.available_seats }}/{{ section.capacity }}</td>
+              <td>
+                <a
+                  href="{% url 'courses:enroll' section_id=section.id %}"
+                  class="btn btn-sm"
+                  style="background-color: #ffd700; color: #111111"
+                >
+                  <i class="fas fa-plus"></i> Enroll
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-center" style="color: #b8b8b8">
+        No available courses found.
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

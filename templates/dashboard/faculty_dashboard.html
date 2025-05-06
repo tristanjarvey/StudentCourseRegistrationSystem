@@ -1,0 +1,123 @@
+{% extends 'users/base.html' %} {% load static %} {% block content %}
+<div class="container-fluid py-4">
+  <h1 class="text-white mb-4">Faculty Dashboard</h1>
+
+  <div class="row">
+    <!-- Quick Actions Card -->
+    <div class="col-md-4 mb-4">
+      <div class="card bg-dark text-white" style="border: 1px solid #ffd700">
+        <div class="card-body">
+          <h5 class="card-title" style="color: #ffd700">Quick Actions</h5>
+          <div class="list-group bg-dark">
+            <a
+              href="{% url 'courses:course_create' %}"
+              class="list-group-item bg-dark text-white border-0"
+            >
+              <i class="fas fa-plus-circle me-2" style="color: #ffd700"></i
+              >Create New Course
+            </a>
+            <a
+              href="{% url 'users:faculty_profile' %}"
+              class="list-group-item bg-dark text-white border-0"
+            >
+              <i class="fas fa-user-edit me-2" style="color: #ffd700"></i>Edit
+              Profile
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teaching Schedule Card -->
+    <div class="col-md-8 mb-4">
+      <div class="card bg-dark text-white" style="border: 1px solid #ffd700">
+        <div class="card-body">
+          <h5 class="card-title" style="color: #ffd700">Teaching Schedule</h5>
+          <div class="table-responsive">
+            <table class="table table-dark">
+              <thead>
+                <tr>
+                  <th>Course Code</th>
+                  <th>Course Name</th>
+                  <th>Schedule</th>
+                  <th>Enrolled</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for section in teaching_sections %}
+                <tr>
+                  <td>{{ section.course.code }}</td>
+                  <td>{{ section.course.name }}</td>
+                  <td>{{ section.schedule }}</td>
+                  <td>
+                    {{ section.enrolled_students.count }}/{{ section.capacity }}
+                  </td>
+                  <td>
+                    <a
+                      href="{% url 'courses:section_manage' section_id=section.id %}"
+                      class="btn btn-sm"
+                      style="background-color: #ffd700; color: #111111"
+                    >
+                      <i class="fas fa-users"></i> Manage
+                    </a>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center" style="color: #b8b8b8">
+                    No courses scheduled.
+                    <a
+                      href="{% url 'courses:course_create' %}"
+                      style="color: #ffd700"
+                      >Create a new course</a
+                    >
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course Statistics Card -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card bg-dark text-white" style="border: 1px solid #ffd700">
+        <div class="card-body">
+          <h5 class="card-title" style="color: #ffd700">Course Statistics</h5>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="text-center">
+                <h3 style="color: #ffd700">{{ total_courses }}</h3>
+                <p>Total Courses</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center">
+                <h3 style="color: #ffd700">{{ total_students }}</h3>
+                <p>Total Students</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center">
+                <h3 style="color: #ffd700">{{ total_sections }}</h3>
+                <p>Active Sections</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center">
+                <h3 style="color: #ffd700">{{ avg_enrollment }}%</h3>
+                <p>Average Enrollment</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

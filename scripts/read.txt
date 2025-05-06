@@ -1,1 +1,0 @@
-This 'scripts' folder will be used for SQL scripts

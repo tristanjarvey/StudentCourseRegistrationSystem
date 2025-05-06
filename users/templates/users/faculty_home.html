@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block title %}Faculty Dashboard - EnrollEase{%
+endblock %} {% block content %}
+<div class="container mt-4">
+  <h2>Welcome, {{ user.get_full_name }}!</h2>
+
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">My Courses</h5>
+          <p class="card-text">Manage your courses and sections.</p>
+          <a href="{% url 'courses:course_list' %}" class="btn btn-primary"
+            >View Courses</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Create Course</h5>
+          <p class="card-text">Add a new course to the system.</p>
+          <a href="{% url 'courses:course_create' %}" class="btn btn-primary"
+            >Create Course</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Manage Sections</h5>
+          <p class="card-text">View and manage course sections.</p>
+          <a href="{% url 'courses:section_list' %}" class="btn btn-primary"
+            >View Sections</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

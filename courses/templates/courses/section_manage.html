@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Section - {{ section.course.code }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Manage Section: {{ section.course.code }} - Section {{ section.section_number }}</h2>
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>Section Details</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Course:</strong> {{ section.course.name }}</p>
+            <p><strong>Instructor:</strong> {{ section.instructor.get_full_name }}</p>
+            <p><strong>Semester:</strong> {{ section.semester.name }}</p>
+            <p><strong>Schedule:</strong> {{ section.schedule }}</p>
+            <p><strong>Location:</strong> {{ section.classroom }}</p>
+            <p><strong>Capacity:</strong> {{ section.capacity }}</p>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>Enrolled Students ({{ enrolled_students.count }})</h3>
+        </div>
+        <div class="card-body">
+            {% if enrolled_students %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Date Enrolled</th>
+                            <th>Grade</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for enrollment in enrolled_students %}
+                        <tr>
+                            <td>{{ enrollment.student.student_id }}</td>
+                            <td>{{ enrollment.student.get_full_name }}</td>
+                            <td>{{ enrollment.student.email }}</td>
+                            <td>{{ enrollment.date_registered|date:"M d, Y" }}</td>
+                            <td>
+                                {% if enrollment.grade %}
+                                    {{ enrollment.grade }}
+                                {% else %}
+                                    Not Graded
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#gradeModal{{ enrollment.id }}">
+                                    Update Grade
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted">No students enrolled in this section.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% for enrollment in enrolled_students %}
+<!-- Grade Update Modal -->
+<div class="modal fade" id="gradeModal{{ enrollment.id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Grade for {{ enrollment.student.get_full_name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" action="{% url 'courses:update_grade' enrollment.id %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="grade" class="form-label">Grade</label>
+                        <select name="grade" id="grade" class="form-select">
+                            <option value="">Select Grade</option>
+                            <option value="A" {% if enrollment.grade == 'A' %}selected{% endif %}>A</option>
+                            <option value="B" {% if enrollment.grade == 'B' %}selected{% endif %}>B</option>
+                            <option value="C" {% if enrollment.grade == 'C' %}selected{% endif %}>C</option>
+                            <option value="D" {% if enrollment.grade == 'D' %}selected{% endif %}>D</option>
+                            <option value="F" {% if enrollment.grade == 'F' %}selected{% endif %}>F</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Grade</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %} 

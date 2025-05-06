@@ -1,0 +1,44 @@
+{# prettier-ignore #} {% extends 'users/base.html' %} {% block title %}Student
+Dashboard - EnrollEase{% endblock %} {% block content %}
+<div class="container mt-4">
+  <h2>Welcome, {{ user.get_full_name }}!</h2>
+
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">My Courses</h5>
+          <p class="card-text">View and manage your enrolled courses.</p>
+          <a href="{% url 'courses:my_courses' %}" class="btn btn-primary"
+            >View Courses</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">My Schedule</h5>
+          <p class="card-text">View your class schedule.</p>
+          <a href="{% url 'courses:my_schedule' %}" class="btn btn-primary"
+            >View Schedule</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Browse Courses</h5>
+          <p class="card-text">Find and enroll in new courses.</p>
+          <a href="{% url 'courses:course_list' %}" class="btn btn-primary"
+            >Browse Courses</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

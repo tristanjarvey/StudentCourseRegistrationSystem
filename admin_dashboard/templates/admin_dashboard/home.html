@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <h2>Buildings</h2>
+    <ul>
+        {% for building in buildings %}
+            <li>{{ building.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Filter Classrooms by Building</h2>
+    <form method="get">
+        <select name="building" onchange="this.form.submit()">
+            <option value="">-- All Buildings --</option>
+            {% for building in buildings %}
+                <option value="{{ building.id }}"
+                    {% if selected_building_id == building.id|stringformat:"s" %}selected{% endif %}>
+                    {{ building.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <h2>Classrooms</h2>
+    <ul>
+        {% if classrooms %}
+            {% for room in classrooms %}
+                <li>{{ room.building.name }} - Room {{ room.room_number }} (Capacity: {{ room.capacity }})</li>
+            {% endfor %}
+        {% else %}
+            <li>No classrooms found for this building.</li>
+        {% endif %}
+    </ul>
+</body>
+</html>

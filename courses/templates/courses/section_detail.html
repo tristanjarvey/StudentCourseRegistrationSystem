@@ -1,0 +1,114 @@
+{% extends 'courses/base.html' %} {% block course_content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title mb-0">Section Details</h2>
+      </div>
+      <div class="card-body">
+        <div class="row mb-4">
+          <div class="col">
+            <h3 class="h4">
+              {{ section.course.code }} - {{ section.course.name }}
+            </h3>
+            <p class="text-muted">Section {{ section.section_number }}</p>
+          </div>
+          <div class="col-auto">
+            <div class="btn-group">
+              <a
+                href="{% url 'courses:section_edit' section.id %}"
+                class="btn btn-outline-primary"
+              >
+                <i class="fas fa-edit"></i> Edit
+              </a>
+              <a
+                href="{% url 'courses:section_delete' section.id %}"
+                class="btn btn-outline-danger"
+              >
+                <i class="fas fa-trash"></i> Delete
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <h5 class="text-muted mb-2">Course Information</h5>
+              <p>
+                <i class="fas fa-book"></i> <strong>Course:</strong> {{
+                section.course.name }}
+              </p>
+              <p>
+                <i class="fas fa-graduation-cap"></i>
+                <strong>Credits:</strong> {{ section.course.credits }}
+              </p>
+              <p>
+                <i class="fas fa-building"></i> <strong>Department:</strong> {{
+                section.course.department.name }}
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <h5 class="text-muted mb-2">Section Information</h5>
+              <p>
+                <i class="fas fa-calendar"></i> <strong>Semester:</strong> {{
+                section.semester.name }}
+              </p>
+              <p>
+                <i class="fas fa-user"></i> <strong>Instructor:</strong> {{
+                section.instructor.name }} {{ section.instructor.last_name }}
+              </p>
+              <p>
+                <i class="fas fa-clock"></i> <strong>Schedule:</strong> {{
+                section.day }} {{ section.time_slot }}
+              </p>
+              <p>
+                <i class="fas fa-map-marker-alt"></i>
+                <strong>Location:</strong> {{ section.location }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col">
+            <div class="card bg-light">
+              <div class="card-body">
+                <h5 class="card-title">Enrollment</h5>
+                <div class="progress mb-2">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: {% widthratio enrolled_students.count section.capacity 100 %}%"
+                    aria-valuenow="{{ enrolled_students.count }}"
+                    aria-valuemin="0"
+                    aria-valuemax="{{ section.capacity }}"
+                  >
+                    {{ enrolled_students.count }}/{{ section.capacity }}
+                  </div>
+                </div>
+                <p class="card-text">
+                  <small class="text-muted">
+                    {{ section.capacity|add:"-"|add:enrolled_students.count }}
+                    seats remaining
+                  </small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a
+          href="{% url 'courses:course_detail' section.course.id %}"
+          class="btn btn-outline-secondary"
+        >
+          <i class="fas fa-arrow-left"></i> Back to Course
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

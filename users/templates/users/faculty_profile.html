@@ -1,0 +1,27 @@
+{# prettier-ignore #} {% extends 'users/base.html' %} {% block title %}Faculty
+Profile - EnrollEase{% endblock %} {% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg p-4">
+        <h2 class="text-center mb-4">Faculty Profile</h2>
+        <form method="post">
+          {% csrf_token %} {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label">{{ field.label }}</label>
+            {{ field }} {% if field.errors %}
+            <div class="text-danger">{{ field.errors }}</div>
+            {% endif %}
+          </div>
+          {% endfor %}
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">
+              Update Profile
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

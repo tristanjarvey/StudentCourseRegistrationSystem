@@ -1,0 +1,81 @@
+{% extends 'users/base.html' %} {% load static %} {% block content %}
+<div
+  class="container-fluid vh-100 d-flex align-items-center justify-content-center"
+  style="background-color: #111111"
+>
+  <div
+    class="card bg-dark text-white"
+    style="max-width: 400px; border: 1px solid #ffd700; border-radius: 10px"
+  >
+    <div class="card-body p-4">
+      <h2 class="text-center mb-4" style="color: #ffd700">Sign In</h2>
+      <p class="text-center mb-4" style="color: #b8b8b8">
+        Enter your credentials to access your account
+      </p>
+
+      <form method="post" action="{% url 'users:login' %}">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="email" class="form-label" style="color: #ffd700"
+            >Username</label
+          >
+          <input
+            type="text"
+            class="form-control bg-dark text-white"
+            id="email"
+            name="email"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label" style="color: #ffd700"
+            >Password</label
+          >
+          <input
+            type="password"
+            class="form-control bg-dark text-white"
+            id="password"
+            name="password"
+            placeholder="********"
+            required
+          />
+        </div>
+
+        {% if form.errors %}
+        <div class="alert alert-danger">Invalid username or password.</div>
+        {% endif %}
+
+        <div class="mt-4">
+          <button
+            type="submit"
+            class="btn btn-block w-100"
+            style="background-color: #ffd700; color: #111111; font-weight: bold"
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-4">
+        <p style="color: #b8b8b8" class="mb-2">Demo accounts:</p>
+        <div class="card bg-dark mb-2" style="border: 1px solid #333">
+          <div class="card-body py-2" style="color: #b8b8b8">
+            Student: john.doe
+          </div>
+        </div>
+        <div class="card bg-dark" style="border: 1px solid #333">
+          <div class="card-body py-2" style="color: #b8b8b8">
+            Faculty: prof.johnson
+          </div>
+        </div>
+        <p class="text-center mt-2" style="color: #b8b8b8; font-size: 0.8rem">
+          Password: password
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

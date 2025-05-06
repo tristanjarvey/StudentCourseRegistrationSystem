@@ -1,0 +1,67 @@
+{% extends 'courses/base.html' %} {% block course_content %}
+<div class="row mb-4">
+  <div class="col">
+    <h1 class="display-4">Course Sections</h1>
+    <h2 class="h4 text-muted">{{ course.code }} - {{ course.name }}</h2>
+  </div>
+  <div class="col-auto">
+    <a
+      href="{% url 'courses:section_create' course.id %}"
+      class="btn btn-primary"
+    >
+      <i class="fas fa-plus"></i> Add Section
+    </a>
+  </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for section in sections %}
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">Section {{ section.section_number }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          {{ section.semester.name }}
+        </h6>
+        <p class="card-text">
+          <i class="fas fa-user"></i> {{ section.instructor }}
+          <br />
+          <i class="fas fa-users"></i> {{ section.current_enrollment }}/{{
+          section.capacity }} Students
+        </p>
+        {% if section.schedule %}
+        <p class="card-text">
+          <small class="text-muted">
+            <i class="fas fa-clock"></i> {{ section.schedule }}
+          </small>
+        </p>
+        {% endif %}
+      </div>
+      <div class="card-footer bg-transparent">
+        <a
+          href="{% url 'courses:section_detail' section.id %}"
+          class="btn btn-outline-primary btn-sm"
+        >
+          View Details
+        </a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <div class="alert alert-info">
+      <i class="fas fa-info-circle"></i> No sections available for this course.
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="mt-4">
+  <a
+    href="{% url 'courses:course_detail' course.id %}"
+    class="btn btn-outline-secondary"
+  >
+    <i class="fas fa-arrow-left"></i> Back to Course
+  </a>
+</div>
+{% endblock %}

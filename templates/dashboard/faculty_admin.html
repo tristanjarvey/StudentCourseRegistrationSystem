@@ -1,0 +1,261 @@
+{% extends 'users/base.html' %} {% block title %}Faculty Admin Dashboard -
+EnrollEase{% endblock %} {% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white">
+          <h2 class="mb-0">Faculty Admin Dashboard</h2>
+        </div>
+        <div class="card-body">
+          <!-- Navigation Tabs -->
+          <ul class="nav nav-tabs mb-4" id="adminTabs" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="courses-tab"
+                data-bs-toggle="tab"
+                href="#courses"
+                role="tab"
+                >Courses</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="sections-tab"
+                data-bs-toggle="tab"
+                href="#sections"
+                role="tab"
+                >Sections</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="students-tab"
+                data-bs-toggle="tab"
+                href="#students"
+                role="tab"
+                >Students</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="faculty-tab"
+                data-bs-toggle="tab"
+                href="#faculty"
+                role="tab"
+                >Faculty</a
+              >
+            </li>
+          </ul>
+
+          <!-- Tab Content -->
+          <div class="tab-content" id="adminTabContent">
+            <!-- Courses Tab -->
+            <div class="tab-pane fade show active" id="courses" role="tabpanel">
+              <div class="d-flex justify-content-between mb-3">
+                <h3>Courses</h3>
+                <a
+                  href="{% url 'courses:course_create' %}"
+                  class="btn btn-primary"
+                >
+                  <i class="fas fa-plus"></i> Add Course
+                </a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th>Name</th>
+                      <th>Department</th>
+                      <th>Credits</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for course in courses %}
+                    <tr>
+                      <td>{{ course.code }}</td>
+                      <td>{{ course.name }}</td>
+                      <td>{{ course.department.name }}</td>
+                      <td>{{ course.credits }}</td>
+                      <td>
+                        <a
+                          href="{% url 'courses:course_edit' course.id %}"
+                          class="btn btn-sm btn-outline-primary"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <a
+                          href="{% url 'courses:course_delete' course.id %}"
+                          class="btn btn-sm btn-outline-danger"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Sections Tab -->
+            <div class="tab-pane fade" id="sections" role="tabpanel">
+              <div class="d-flex justify-content-between mb-3">
+                <h3>Sections</h3>
+                <a
+                  href="{% url 'courses:section_create' %}"
+                  class="btn btn-primary"
+                >
+                  <i class="fas fa-plus"></i> Add Section
+                </a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Section ID</th>
+                      <th>Course</th>
+                      <th>Semester</th>
+                      <th>Instructor</th>
+                      <th>Schedule</th>
+                      <th>Building</th>
+                      <th>Classroom</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for section in sections %}
+                    <tr>
+                      <td>{{ section.section_id }}</td>
+                      <td>{{ section.course.code }}</td>
+                      <td>{{ section.semester.name }}</td>
+                      <td>{{ section.instructor }}</td>
+                      <td>{{ section.schedule_display }}</td>
+                      <td>{{ section.building_display }}</td>
+                      <td>{{ section.classroom_display }}</td>
+                      <td>
+                        <a
+                          href="{% url 'courses:section_edit' section.id %}"
+                          class="btn btn-sm btn-outline-primary"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <a
+                          href="{% url 'courses:section_delete' section.id %}"
+                          class="btn btn-sm btn-outline-danger"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Students Tab -->
+            <div class="tab-pane fade" id="students" role="tabpanel">
+              <div class="d-flex justify-content-between mb-3">
+                <h3>Students</h3>
+                <a
+                  href="{% url 'users:student_create' %}"
+                  class="btn btn-primary"
+                >
+                  <i class="fas fa-plus"></i> Add Student
+                </a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Student ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Degree Program</th>
+                      <th>Enrollment Year</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for student in students %}
+                    <tr>
+                      <td>{{ student.student_id }}</td>
+                      <td>{{ student.student_display }}</td>
+                      <td>{{ student.user.email }}</td>
+                      <td>{{ student.degree_program }}</td>
+                      <td>{{ student.enrollment_year }}</td>
+                      <td>
+                        <a
+                          href="{% url 'users:student_edit' student.id %}"
+                          class="btn btn-sm btn-outline-primary"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <a
+                          href="{% url 'users:student_delete' student.id %}"
+                          class="btn btn-sm btn-outline-danger"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Faculty Tab -->
+            <div class="tab-pane fade" id="faculty" role="tabpanel">
+              <div class="d-flex justify-content-between mb-3">
+                <h3>Faculty</h3>
+                {% if user.is_superuser %}
+                <a
+                  href="{% url 'users:faculty_create' %}"
+                  class="btn btn-primary"
+                >
+                  <i class="fas fa-plus"></i> Add Faculty
+                </a>
+                {% endif %}
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Employee ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Department</th>
+                      <th>Title</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for faculty_member in faculty %}
+                    <tr>
+                      <td>{{ faculty_member.employee_id }}</td>
+                      <td>
+                        {{ faculty_member.name }} {{ faculty_member.last_name }}
+                      </td>
+                      <td>{{ faculty_member.user.email }}</td>
+                      <td>{{ faculty_member.department }}</td>
+                      <td>{{ faculty_member.title }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'users/base.html' %} {% load static %} {% block content %}
+<div class="container py-4">
+  <h1 class="text-white mb-4">My Class Schedule</h1>
+
+  <div class="card bg-dark">
+    <div class="card-body">
+      {% if enrollments %}
+      <div class="table-responsive">
+        <table class="table table-dark table-bordered">
+          <thead>
+            <tr>
+              <th>Time</th>
+              {% for day in days %}
+              <th>{{ day }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for time_slot in time_slots %}
+            <tr>
+              <td>{{ time_slot }}</td>
+              {% for day in days %}
+              <td>
+                {% for enrollment in enrollments %} {% if enrollment.section.day
+                == day and enrollment.section.time == time_slot %}
+                <div
+                  class="p-2"
+                  style="
+                    background-color: rgba(255, 215, 0, 0.1);
+                    border-radius: 4px;
+                  "
+                >
+                  <strong>{{ enrollment.section.course.code }}</strong><br />
+                  <small>{{ enrollment.section.course.name }}</small><br />
+                  <small
+                    >Prof. {{ enrollment.section.instructor.last_name }}</small
+                  >
+                </div>
+                {% endfor %}
+              </td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-center" style="color: #b8b8b8">
+        You are not enrolled in any courses yet.
+        <a
+          href="{% url 'courses:course_list' %}"
+          class="text-decoration-none"
+          style="color: #ffd700"
+        >
+          Browse available courses
+        </a>
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
